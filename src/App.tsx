@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ChangeEvent, FC, useRef, useState } from "react"
+import { EMPTY_STRING } from "constants/base"
+import { AuthForm, MessagesList, SendMessageForm } from "components"
+import { MessageType } from "types"
 
-function App() {
+export const App: FC = () => {
+
+  const [messages, setMessages] = useState<MessageType[]>([])
+  const [username, setUsername] = useState(EMPTY_STRING)
+  const [isConnected, setIsConnected] = useState(false)
+
+  const socketRef = useRef<WebSocket>()
+
+  const currentUsername = username.trim() || "Аноним"
+
+  const onUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setUsername(event.currentTarget.value)
+  }
+
+  const onConnectClick = (): void => {
+    socketRef.current = new WebSocket("ws://localhost:5000")
+
+    socketRef.current.onopen = () => {
+      setIsConnected(true)
+
+      const message = {id: Date.now(), username, event: "connection"}
+
+      if (socketRef.current) {
+        socketRef.current.send(JSON.stringify(message))
+      }
+    }
+
+    socketRef.current.onmessage = (event) => {
+      const message = JSON.parse(event.data)
+      setMessages(prev => [message, ...prev])
+    }
+  }
+
+  const handleSendMessageClick = async (messageTrimmed: string) => {
+    const message = {username, message: messageTrimmed, id: Date.now(), event: "message"}
+
+    if (socketRef.current) {
+      socketRef.current.send(JSON.stringify(message))
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div>
+        {!isConnected
+          ? <AuthForm username={username} onUsernameChange={onUsernameChange} onConnectClick={onConnectClick}/>
+          : <SendMessageForm handleSendMessageClick={handleSendMessageClick}/>}
+        <MessagesList messages={messages} currentUsername={currentUsername}/>
+      </div>
     </div>
-  );
+  )
 }
-
-export default App;

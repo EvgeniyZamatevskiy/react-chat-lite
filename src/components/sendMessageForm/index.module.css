@@ -1,0 +1,36 @@
+.sendMessageForm {
+  padding: 40px;
+  width: 400px;
+  border-radius: 8px;
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.errorMessage {
+  color: red;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.sendMessageForm input {
+  min-width: 300px;
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #000;
+}
+
+.sendMessageForm button {
+  margin-top: 15px;
+  margin-left: auto;
+  border: 1px solid #000;
+  background: none;
+  padding: 10px 15px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
+
+.sendMessageForm button:focus, .sendMessageForm input:focus {
+  outline: none;
+}
