@@ -47,9 +47,9 @@ export const App: FC = () => {
   return (
     <div className="app">
       <div>
-        {!isConnected
-          ? <AuthForm username={username} onUsernameChange={onUsernameChange} onConnectClick={onConnectClick}/>
-          : <SendMessageForm handleSendMessageClick={handleSendMessageClick}/>}
+        {isConnected
+          ? <SendMessageForm handleSendMessageClick={handleSendMessageClick}/>
+          : <AuthForm username={username} onUsernameChange={onUsernameChange} onConnectClick={onConnectClick}/>}
         <MessagesList messages={messages} currentUsername={currentUsername}/>
       </div>
     </div>
