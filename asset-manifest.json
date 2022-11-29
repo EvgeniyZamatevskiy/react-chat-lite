@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-chat-lite/static/css/main.5bf179f6.css",
+    "main.js": "/react-chat-lite/static/js/main.18d80a41.js",
+    "index.html": "/react-chat-lite/index.html",
+    "main.5bf179f6.css.map": "/react-chat-lite/static/css/main.5bf179f6.css.map",
+    "main.18d80a41.js.map": "/react-chat-lite/static/js/main.18d80a41.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5bf179f6.css",
+    "static/js/main.18d80a41.js"
+  ]
+}
